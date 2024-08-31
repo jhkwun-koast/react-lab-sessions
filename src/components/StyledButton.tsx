@@ -10,14 +10,14 @@
 
 export interface StyledButtonProps {
   /* Your code starts here */
-  children?: AnyForExam;
-  onClick?: AnyForExam;
-  id?: AnyForExam;
-  className?: AnyForExam;
+  children?: React.ReactNode;
+  onClick?: ()=>void;
+  id?: string;
+  className?: string;
   /* Your code ends here */
 }
 
-function StyledButton(props: StyledButtonProps) {
+function StyledButton({ children, className, id, onClick }: StyledButtonProps) {
   /**
    * TASK1: StyledButton 컴포넌트를 완성합니다.
    * - 버튼의 클래스 이름은 props로 전달받은 className과 tailwindcss 클래스를 조합하여 생성합니다.
@@ -28,8 +28,9 @@ function StyledButton(props: StyledButtonProps) {
   /* Your code starts here */
   return (
     <button
-      className="my-1 flex h-8 w-20 items-center justify-center rounded-md bg-zinc-500 text-white"
+      className={className} id={id} onClick={onClick}
     >
+      {children}
     </button>
   );
   /* Your code ends here */

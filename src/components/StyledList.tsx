@@ -5,10 +5,11 @@
  *   - records는 숫자 배열입니다.
  * - 선택 속성은 id입니다.
  */
+import { ReactNode } from 'react';
 
 export interface ListProps {
-  records: AnyForExam;
-  id?: AnyForExam;
+  records: number[];
+  id?: string;
 }
 
 /**
@@ -19,11 +20,11 @@ export interface ListProps {
  *   - index는 리스트 아이템의 인덱스입니다.
  */
 export interface ListItemProps {
-  children?: AnyForExam;
-  index?: AnyForExam;
+  children?: ReactNode;
+  index?: number;
 }
 
-function ListItem(props: ListItemProps) {
+function ListItem({ children, index }: ListItemProps) {
   /**
    * TASK2: ListItem 컴포넌트를 완성합니다.
    * - 리스트 아이템의 클래스 이름은 tailwindcss 클래스를 사용하여 생성합니다.
@@ -34,13 +35,23 @@ function ListItem(props: ListItemProps) {
   return (
     <li
       className="my-1 flex h-12 w-32 items-center justify-center rounded-sm bg-zinc-300 text-zinc-800"
+      key={index}
     >
+      {children}
     </li>
   );
   /* Your code ends here */
 }
 
-function List(props: ListProps) {
+function Ul ({ children, Id }:{ children:ReactNode, Id:string | undefined}) {
+  return (
+    <ul className="mt-4 border-2 border-zinc-500 p-2" id={Id}>
+      {children}
+    </ul>
+  );
+}
+
+function List({ id, records }: ListProps) {
   /**
    * TASK2: List 컴포넌트를 완성합니다.
    * - records 배열이 비어있는 경우, ListItem에는 "기록이 없습니다."를 전달하여 출력합니다.
@@ -49,10 +60,13 @@ function List(props: ListProps) {
    * - ListItem 컴포넌트에는 index 속성을 전달하여 각 리스트 아이템의 인덱스를 전달합니다.
    */
   /* Your code starts here */
-  return (
-    <ul className="mt-4 border-2 border-zinc-500 p-2">
-    </ul>
-  );
+  const displayLi = (!records || records.length === 0) ? <ListItem>기록이 없습니다.</ListItem> :
+    records.map((record, index) => (
+      <ListItem key={index} index={index}>
+        {index + 1}번째 기록: {record}
+      </ListItem>
+    ));
+  return <Ul Id={id}>{displayLi}</Ul>;
   /* Your code ends here */
 }
 
